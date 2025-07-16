@@ -4,35 +4,36 @@
     <meta charset="utf-8" />
     <title>鲨鱼蹦迪</title>
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <style>body { margin:0; overflow:hidden; }</style>
+    <style>
+      body { margin:0; overflow:hidden; }
+      #playBtn {
+        position: fixed; top: 20px; left: 20px; z-index: 999;
+        padding: 10px 15px; font-size: 16px; cursor: pointer;
+      }
+    </style>
   </head>
   <body>
+    <button id="playBtn">shark</button>
+
     <a-scene background="color: black">
       <a-assets>
         <a-asset-item id="sharkModel" src="./Shark.glb"></a-asset-item>
+        <audio id="sharkAudio" src="./shark.mp3"></audio>
       </a-assets>
 
-      <!-- 摄像头 -->
       <a-entity camera position="0 1.6 0"></a-entity>
 
-      <!-- RGB 闪烁灯光 -->
       <a-light type="point" intensity="2" color="#f00" position="-2 2 2"
-               animation="property: light.intensity; dir: alternate; dur: 300; loop: true; to: 0">
-      </a-light>
+               animation="property: light.intensity; dir: alternate; dur: 300; loop: true; to: 0"></a-light>
 
       <a-light type="point" intensity="2" color="#0f0" position="0 2 2"
-               animation="property: light.intensity; dir: alternate; dur: 400; loop: true; to: 0">
-      </a-light>
-      
-      <a-sound src="./shark.mp3" autoplay="true" loop="true" volume="0.3"></a-sound>
+               animation="property: light.intensity; dir: alternate; dur: 400; loop: true; to: 0"></a-light>
 
       <a-light type="point" intensity="2" color="#00f" position="2 2 2"
-               animation="property: light.intensity; dir: alternate; dur: 500; loop: true; to: 0">
-      </a-light>
+               animation="property: light.intensity; dir: alternate; dur: 500; loop: true; to: 0"></a-light>
 
       <a-light type="ambient" color="#444"></a-light>
 
-      <!-- 鲨鱼：更快旋转 更高更快蹦 -->
       <a-entity gltf-model="#sharkModel"
                 position="0 0 -8"
                 scale="0.04 0.04 0.04"
@@ -40,8 +41,16 @@
                 animation__jumpup="property: position; to: 0 1.2 -8; dur: 200; dir: alternate; loop: true; easing: easeOutQuad">
       </a-entity>
     </a-scene>
+
+    <script>
+      const btn = document.getElementById('playBtn')
+      btn.onclick = () => {
+        const audioEl = document.querySelector('audio#sharkAudio')
+        audioEl.play()
+        btn.style.display = 'none'
+      }
+    </script>
   </body>
 </html>
-
 
 <!-- Shark by  Poly by Google  [ CC-BY ] 來自 Poly Pizza -->
