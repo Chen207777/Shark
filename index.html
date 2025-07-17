@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>鲨鱼蹦迪</title>
+    <title>鲨鱼</title>
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
     <style>
       body { margin:0; overflow:hidden; }
@@ -18,7 +18,7 @@
     <a-scene background="color: black">
       <a-assets>
         <a-asset-item id="sharkModel" src="./Shark.glb"></a-asset-item>
-        <audio id="sharkAudio" src="./shark.mp3"></audio>
+        <audio id="sharkAudio" src="./Shark.mp3"></audio>
       </a-assets>
 
       <a-entity camera position="0 1.6 0"></a-entity>
@@ -37,16 +37,39 @@
       <a-entity gltf-model="#sharkModel"
                 position="0 0 -8"
                 scale="0.04 0.04 0.04"
-                animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 800; easing: linear"
-                animation__jumpup="property: position; to: 0 1.2 -8; dur: 200; dir: alternate; loop: true; easing: easeOutQuad">
-      </a-entity>
-    </a-scene>
+                animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"
+                animation__jumpup="property: position; to: 0 1.2 -8; dur: 230; dir: alternate; loop: true; easing: easeOutQuad"></a-entity>
 
     <script>
       const btn = document.getElementById('playBtn')
+      let sharksAdded = false;
       btn.onclick = () => {
         const audioEl = document.querySelector('audio#sharkAudio')
         audioEl.play()
+        btn.style.display = 'block' // 强制显示按钮，防止被隐藏
+
+        if (!sharksAdded) {
+          const scene = document.querySelector('a-scene');
+          // Left shark
+          const leftShark = document.createElement('a-entity');
+          leftShark.setAttribute('gltf-model', '#sharkModel');
+          leftShark.setAttribute('position', '-6 0 -8');
+          leftShark.setAttribute('scale', '0.02 0.02 0.02');
+          leftShark.setAttribute('animation__rotate', 'property: rotation; to: 0 360 0; loop: true; dur: 800; easing: linear');
+          leftShark.setAttribute('animation__jumpup', 'property: position; to: -6 1.2 -8; dur: 230; dir: alternate; loop: true; easing: easeOutQuad');
+          scene.appendChild(leftShark);
+
+          // Right shark
+          const rightShark = document.createElement('a-entity');
+          rightShark.setAttribute('gltf-model', '#sharkModel');
+          rightShark.setAttribute('position', '6 0 -8');
+          rightShark.setAttribute('scale', '0.02 0.02 0.02');
+          rightShark.setAttribute('animation__rotate', 'property: rotation; to: 0 360 0; loop: true; dur: 800; easing: linear');
+          rightShark.setAttribute('animation__jumpup', 'property: position; to: 6 1.2 -8; dur: 230; dir: alternate; loop: true; easing: easeOutQuad');
+          scene.appendChild(rightShark);
+
+          sharksAdded = true;
+        }
       }
     </script>
   </body>
